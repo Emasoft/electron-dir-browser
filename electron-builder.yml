@@ -1,0 +1,46 @@
+appId: com.emasoft.dir-browser
+productName: DirBrowser
+copyright: Copyright © 2026
+
+directories:
+  output: dist
+  buildResources: build
+
+files:
+  - dist/**/*
+  - package.json
+
+asar: true
+
+mac:
+  target:
+    - target: dmg
+      arch: [x64, arm64]
+    - target: zip
+      arch: [x64, arm64]
+  category: public.app-category.utilities
+  hardenedRuntime: false
+  gatekeeperAssess: false
+
+win:
+  target:
+    - target: portable
+      arch: x64
+
+linux:
+  target:
+    - target: AppImage
+      arch: [x64, arm64]
+  category: Utility
+
+# Ensure portable builds (no installers)
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: false
+
+dmg:
+  title: "${productName} ${version}"
+  icon: false
+
+portable:
+  artifactName: "${productName}-${version}-${os}-${arch}-portable.${ext}"

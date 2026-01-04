@@ -1,0 +1,33 @@
+{
+  "name": "electron-dir-browser",
+  "version": "1.0.0",
+  "description": "Cross-platform portable directory browser built with Electron",
+  "main": "dist/main/index.js",
+  "scripts": {
+    "build:main": "tsc --project tsconfig.main.json",
+    "build:preload": "tsc --project tsconfig.preload.json",
+    "build:renderer": "vite build",
+    "build": "pnpm run build:main && pnpm run build:preload && pnpm run build:renderer",
+    "pack": "pnpm run build && electron-builder --dir",
+    "dist": "pnpm run build && electron-builder",
+    "dist:mac": "pnpm run build && electron-builder --mac",
+    "dist:win": "pnpm run build && electron-builder --win",
+    "dist:linux": "pnpm run build && electron-builder --linux",
+    "dev": "vite",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "keywords": ["electron", "directory", "browser", "file-manager", "cross-platform"],
+  "author": "Emasoft",
+  "license": "MIT",
+  "packageManager": "pnpm@10.26.2",
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.1.2",
+    "electron": "^39.2.7",
+    "electron-builder": "^26.0.12",
+    "eslint": "^9.39.2",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.0",
+    "vitest": "^4.0.16"
+  }
+}
