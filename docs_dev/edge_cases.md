@@ -103,3 +103,33 @@ However, this is a TypeScript/JavaScript project using vitest as the test runner
 
 ---
 
+## 2026-01-04: GitHub Large File Limits and Build Artifacts
+**Template**: N/A (project workflow, affects CI/CD)
+**Scenario**: Committing built Electron artifacts to GitHub repository
+**Problem**: Attempted to commit `release/` directory containing macOS builds. GitHub rejected push due to files >100MB:
+- `release/mac-arm64/DirBrowser.app/.../app.asar` - 535MB (Electron app bundle)
+- `release/mac/DirBrowser.app/.../Electron Framework` - 183MB
+- `release/mac-arm64/DirBrowser.app/.../Electron Framework` - 166MB
+
+Error: `GH001: Large files detected. You may want to try Git Large File Storage`
+
+**Workaround**:
+- Added `release/` to .gitignore
+- Reset commit and recommitted without release directory
+- Build artifacts remain local only
+- CI/CD workflow will build and upload to GitHub Actions artifacts
+- For releases, use GitHub Releases to attach binaries (no repo size impact)
+
+**Suggestion**: Template-generated .gitignore should include:
+- Common build output directories by project type:
+  - Electron: `dist/`, `release/`, `out/`
+  - Python: `dist/`, `build/`, `*.egg-info/`
+  - Go: `bin/`, `pkg/`
+  - Rust: `target/`
+- Warn when files >50MB are staged for commit
+- CI/CD workflow templates should use artifact upload, not git commits
+
+**Result**: Project now follows best practices - source in git, artifacts in CI/CD. Successfully pushed to GitHub after fixing.
+
+---
+
