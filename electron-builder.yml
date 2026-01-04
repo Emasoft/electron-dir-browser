@@ -3,11 +3,13 @@ productName: DirBrowser
 copyright: Copyright © 2026
 
 directories:
-  output: dist
+  output: release
   buildResources: build
 
 files:
-  - dist/**/*
+  - from: dist
+    to: dist
+    filter: ["**/*"]
   - package.json
 
 asar: true
